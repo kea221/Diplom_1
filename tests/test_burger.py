@@ -3,19 +3,24 @@ from unittest.mock import Mock
 
 from praktikum.burger import Burger
 from praktikum.bun import Bun
+from praktikum.ingredient import Ingredient
 from praktikum.ingredient_types import INGREDIENT_TYPE_SAUCE, INGREDIENT_TYPE_FILLING
 
 
 class TestBurger:
     def test_set_buns_buns_set(self):
-        mock = Mock()
-        mock.set_buns.return_value = ("black bun", 100)
-        assert mock.set_buns(mock) == ("black bun", 100)
+        bun = Bun("black bun", 100)
+        burger = Burger()
+        burger.set_buns(bun)
+        assert "black bun" in burger.get_receipt()
 
     def test_add_ingredient_ingredient_added(self):
-        mock = Mock()
-        mock.add_ingredient.return_value = (INGREDIENT_TYPE_SAUCE, "hot sauce", 100)
-        assert mock.add_ingredient(mock) == (INGREDIENT_TYPE_SAUCE, "hot sauce", 100)
+        bun = Bun("black bun", 100)
+        ingredient = Ingredient(INGREDIENT_TYPE_SAUCE, "hot sauce", 100)
+        burger = Burger()
+        burger.set_buns(bun)
+        burger.add_ingredient(ingredient)
+        assert "hot sauce" in burger.get_receipt()
 
     def test_remove_ingredient_ingredient_removed(self):
         burger = Burger()
